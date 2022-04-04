@@ -1,0 +1,41 @@
+﻿@model MvcStok.Models.Entity.Tbl_Ariza
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal1">
+    Arıza Bildir
+</button>
+<div class="modal" id="Modal1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Arıza Bildirme Ekranı</h2>
+            </div>
+            <form method="post" action="/Ariza/YeniAriza">
+                <div class="modal-body">
+                    <label>
+                        Ürün ID'si:
+                    </label>
+                    @Html.TextBoxFor(m => m.URUN, new { @class = "form-control" })
+                    <br />
+                    <label>
+                        Müşteri ID'si:
+                    </label>
+                    @Html.TextBoxFor(m => m.MUSTERI, new { @class = "form-control" })
+                    <br />
+                    <label>
+                        Arıza Durum:
+                    </label>
+                    @Html.TextBoxFor(m => m.ARIZADURUM, new { @class = "form-control" })
+                    <br />
+                    <button type="submit" class="btn btn-info">Arıza Bildir</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">İptal Et</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

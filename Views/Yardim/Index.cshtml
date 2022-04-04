@@ -1,0 +1,45 @@
+﻿
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<div class="modal fade" id="Modal1" role="alert">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Hakkımızda Popup Modal</h2>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <form method="post" action="~/Views/Yardim/Index.cshtml">
+                <div class="modal-body">
+                    <p style="color:red"><b>Bu websitesi Selman Said Gülmez tarafından hazırlanmıştır.</b></p>
+                    <p style="color:black"><b><a href="mailto:selman.gulmez@ogr.dpu.edu.tr">selman.gulmez@ogr.dpu.edu.tr</a></b></p>
+                    <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="mailto:" target="_blank"><i class="far fa-envelope"></i></a>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<p style="color:red"><b>Bu websitesi Selman Said Gülmez tarafından hazırlanmıştır.</b></p>
+<p style="color:black"><b><a href="mailto:selman.gulmez@ogr.dpu.edu.tr">selman.gulmez@ogr.dpu.edu.tr</a></b></p>
+<a href="https://www.linkedin.com/in/selman-said-g%C3%BClmez-baa74b1b9/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+<a href="mailto:selman.gulmez@ogr.dpu.edu.tr" target="_blank"><i class="far fa-envelope"></i></a>
+
+<script type="text/javascript">
+    $(window).on('load', function () {
+        $('#Modal1').modal('show');
+        function gohome() {
+            window.location = "../Anasayfa/Index"
+        }
+    });
+</script>

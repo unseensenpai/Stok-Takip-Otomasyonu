@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MvcDbStokModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Tbl_Admin">
+    <Key>
+      <PropertyRef Name="AdminID" />
+    </Key>
+    <Property Name="AdminID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AdminUserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AdminPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AdminRole" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Tbl_Kategoriler">
+    <Key>
+      <PropertyRef Name="KATEGORIID" />
+    </Key>
+    <Property Name="KATEGORIID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KATEGORIAD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Tbl_Urunler" Relationship="Self.FK_Tbl_Urunler_Tbl_Kategoriler" FromRole="Tbl_Kategoriler" ToRole="Tbl_Urunler" />
+  </EntityType>
+  <EntityType Name="Tbl_Musteriler">
+    <Key>
+      <PropertyRef Name="MUSTERIID" />
+    </Key>
+    <Property Name="MUSTERIID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MUSTERIAD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="MUSTERISOYAD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Tbl_Satislar" Relationship="Self.FK_Tbl_Satislar_Tbl_Musteriler" FromRole="Tbl_Musteriler" ToRole="Tbl_Satislar" />
+    <NavigationProperty Name="Tbl_Ariza" Relationship="MvcDbStokModel.FK_Tbl_Ariza_Tbl_Musteriler" FromRole="Tbl_Musteriler" ToRole="Tbl_Ariza" />
+  </EntityType>
+  <EntityType Name="Tbl_Satislar">
+    <Key>
+      <PropertyRef Name="SATISID" />
+    </Key>
+    <Property Name="SATISID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="URUN" Type="Int32" />
+    <Property Name="MUSTERI" Type="Int32" />
+    <Property Name="ADET" Type="Byte" />
+    <Property Name="FIYAT" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="Tbl_Musteriler" Relationship="Self.FK_Tbl_Satislar_Tbl_Musteriler" FromRole="Tbl_Satislar" ToRole="Tbl_Musteriler" />
+    <NavigationProperty Name="Tbl_Urunler" Relationship="Self.FK_Tbl_Satislar_Tbl_Urunler" FromRole="Tbl_Satislar" ToRole="Tbl_Urunler" />
+  </EntityType>
+  <EntityType Name="Tbl_Urunler">
+    <Key>
+      <PropertyRef Name="URUNID" />
+    </Key>
+    <Property Name="URUNID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="URUNAD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="MARKA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="URUNKATEGORI" Type="Int16" />
+    <Property Name="FIYAT" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="STOK" Type="Byte" />
+    <NavigationProperty Name="Tbl_Kategoriler" Relationship="Self.FK_Tbl_Urunler_Tbl_Kategoriler" FromRole="Tbl_Urunler" ToRole="Tbl_Kategoriler" />
+    <NavigationProperty Name="Tbl_Satislar" Relationship="Self.FK_Tbl_Satislar_Tbl_Urunler" FromRole="Tbl_Urunler" ToRole="Tbl_Satislar" />
+    <Property Name="ARIZA" Type="Byte" />
+    <NavigationProperty Name="Tbl_Ariza" Relationship="MvcDbStokModel.FK_Tbl_Ariza_Tbl_Urunler" FromRole="Tbl_Urunler" ToRole="Tbl_Ariza" />
+    <NavigationProperty Name="Tbl_Ariza1" Relationship="MvcDbStokModel.FK_Tbl_Ariza_Tbl_Urunler1" FromRole="Tbl_Urunler" ToRole="Tbl_Ariza" />
+  </EntityType>
+  <Association Name="FK_Tbl_Urunler_Tbl_Kategoriler">
+    <End Role="Tbl_Kategoriler" Type="Self.Tbl_Kategoriler" Multiplicity="0..1" />
+    <End Role="Tbl_Urunler" Type="Self.Tbl_Urunler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Kategoriler">
+        <PropertyRef Name="KATEGORIID" />
+      </Principal>
+      <Dependent Role="Tbl_Urunler">
+        <PropertyRef Name="URUNKATEGORI" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Satislar_Tbl_Musteriler">
+    <End Role="Tbl_Musteriler" Type="Self.Tbl_Musteriler" Multiplicity="0..1" />
+    <End Role="Tbl_Satislar" Type="Self.Tbl_Satislar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Musteriler">
+        <PropertyRef Name="MUSTERIID" />
+      </Principal>
+      <Dependent Role="Tbl_Satislar">
+        <PropertyRef Name="MUSTERI" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Satislar_Tbl_Urunler">
+    <End Role="Tbl_Urunler" Type="Self.Tbl_Urunler" Multiplicity="0..1" />
+    <End Role="Tbl_Satislar" Type="Self.Tbl_Satislar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Urunler">
+        <PropertyRef Name="URUNID" />
+      </Principal>
+      <Dependent Role="Tbl_Satislar">
+        <PropertyRef Name="URUN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MvcDbStokEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Tbl_Admin" EntityType="Self.Tbl_Admin" />
+    <EntitySet Name="Tbl_Kategoriler" EntityType="Self.Tbl_Kategoriler" />
+    <EntitySet Name="Tbl_Musteriler" EntityType="Self.Tbl_Musteriler" />
+    <EntitySet Name="Tbl_Satislar" EntityType="Self.Tbl_Satislar" />
+    <EntitySet Name="Tbl_Urunler" EntityType="Self.Tbl_Urunler" />
+    <AssociationSet Name="FK_Tbl_Urunler_Tbl_Kategoriler" Association="Self.FK_Tbl_Urunler_Tbl_Kategoriler">
+      <End Role="Tbl_Kategoriler" EntitySet="Tbl_Kategoriler" />
+      <End Role="Tbl_Urunler" EntitySet="Tbl_Urunler" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Satislar_Tbl_Musteriler" Association="Self.FK_Tbl_Satislar_Tbl_Musteriler">
+      <End Role="Tbl_Musteriler" EntitySet="Tbl_Musteriler" />
+      <End Role="Tbl_Satislar" EntitySet="Tbl_Satislar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Satislar_Tbl_Urunler" Association="Self.FK_Tbl_Satislar_Tbl_Urunler">
+      <End Role="Tbl_Urunler" EntitySet="Tbl_Urunler" />
+      <End Role="Tbl_Satislar" EntitySet="Tbl_Satislar" />
+    </AssociationSet>
+    <EntitySet Name="Tbl_Ariza" EntityType="MvcDbStokModel.Tbl_Ariza" />
+    <AssociationSet Name="FK_Tbl_Ariza_Tbl_Musteriler" Association="MvcDbStokModel.FK_Tbl_Ariza_Tbl_Musteriler">
+      <End Role="Tbl_Musteriler" EntitySet="Tbl_Musteriler" />
+      <End Role="Tbl_Ariza" EntitySet="Tbl_Ariza" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Ariza_Tbl_Urunler" Association="MvcDbStokModel.FK_Tbl_Ariza_Tbl_Urunler">
+      <End Role="Tbl_Urunler" EntitySet="Tbl_Urunler" />
+      <End Role="Tbl_Ariza" EntitySet="Tbl_Ariza" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tbl_Ariza_Tbl_Urunler1" Association="MvcDbStokModel.FK_Tbl_Ariza_Tbl_Urunler1">
+      <End Role="Tbl_Urunler" EntitySet="Tbl_Urunler" />
+      <End Role="Tbl_Ariza" EntitySet="Tbl_Ariza" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Tbl_Ariza">
+    <Key>
+      <PropertyRef Name="ARIZAID" />
+    </Key>
+    <Property Name="ARIZAID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="URUN" Type="Int32" />
+    <Property Name="MUSTERI" Type="Int32" />
+    <Property Name="ARIZADURUM" Type="Boolean" />
+    <NavigationProperty Name="Tbl_Musteriler" Relationship="MvcDbStokModel.FK_Tbl_Ariza_Tbl_Musteriler" FromRole="Tbl_Ariza" ToRole="Tbl_Musteriler" />
+    <NavigationProperty Name="Tbl_Urunler" Relationship="MvcDbStokModel.FK_Tbl_Ariza_Tbl_Urunler" FromRole="Tbl_Ariza" ToRole="Tbl_Urunler" />
+    <NavigationProperty Name="Tbl_Urunler1" Relationship="MvcDbStokModel.FK_Tbl_Ariza_Tbl_Urunler1" FromRole="Tbl_Ariza" ToRole="Tbl_Urunler" />
+  </EntityType>
+  <Association Name="FK_Tbl_Ariza_Tbl_Musteriler">
+    <End Type="MvcDbStokModel.Tbl_Musteriler" Role="Tbl_Musteriler" Multiplicity="0..1" />
+    <End Type="MvcDbStokModel.Tbl_Ariza" Role="Tbl_Ariza" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Musteriler">
+        <PropertyRef Name="MUSTERIID" />
+      </Principal>
+      <Dependent Role="Tbl_Ariza">
+        <PropertyRef Name="MUSTERI" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Ariza_Tbl_Urunler">
+    <End Type="MvcDbStokModel.Tbl_Urunler" Role="Tbl_Urunler" Multiplicity="0..1" />
+    <End Type="MvcDbStokModel.Tbl_Ariza" Role="Tbl_Ariza" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Urunler">
+        <PropertyRef Name="URUNID" />
+      </Principal>
+      <Dependent Role="Tbl_Ariza">
+        <PropertyRef Name="URUN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tbl_Ariza_Tbl_Urunler1">
+    <End Type="MvcDbStokModel.Tbl_Urunler" Role="Tbl_Urunler" Multiplicity="0..1" />
+    <End Type="MvcDbStokModel.Tbl_Ariza" Role="Tbl_Ariza" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tbl_Urunler">
+        <PropertyRef Name="URUNID" />
+      </Principal>
+      <Dependent Role="Tbl_Ariza">
+        <PropertyRef Name="URUN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
